@@ -30,10 +30,28 @@ from .domain import (
 # --------------------------------------------------------------------------- #
 
 
+# Valid @gravity-ui/graph ``canDrag`` (ECanDrag) values: which blocks the user
+# can move with the mouse. The library default is ``"none"`` (blocks immovable).
+_CAN_DRAG_VALUES = {"all", "onlySelected", "none"}
+
+
+def _normalize_can_drag(value: bool | str) -> str:
+    """Map an ergonomic ``can_drag_blocks`` flag to an ECanDrag string."""
+    if isinstance(value, bool):
+        return "all" if value else "none"
+    if value not in _CAN_DRAG_VALUES:
+        raise ValueError(
+            f"can_drag_blocks must be a bool or one of {sorted(_CAN_DRAG_VALUES)}, "
+            f"got {value!r}"
+        )
+    return value
+
+
 def default_settings(
     *,
     can_drag_camera: bool = True,
     can_zoom_camera: bool = True,
+    can_drag_blocks: bool | str = True,
     can_create_new_connections: bool = False,
     use_bezier_connections: bool = True,
     bezier_direction: str = "horizontal",
@@ -42,10 +60,17 @@ def default_settings(
     use_blocks_anchors: bool = True,
     scale_font_size: float = 1.0,
 ) -> dict[str, Any]:
-    """Build a ``settings`` dict from the most common Storybook controls."""
+    """Build a ``settings`` dict from the most common Storybook controls.
+
+    ``can_drag_blocks`` controls whether nodes can be moved with the mouse
+    (``canDrag``). The upstream default is ``"none"`` (immovable), so this
+    defaults to ``True`` -> ``"all"`` to keep the component interactive. Pass
+    ``False`` for ``"none"`` or ``"onlySelected"`` to restrict it.
+    """
     return {
         "canDragCamera": can_drag_camera,
         "canZoomCamera": can_zoom_camera,
+        "canDrag": _normalize_can_drag(can_drag_blocks),
         "canCreateNewConnections": can_create_new_connections,
         "useBezierConnections": use_bezier_connections,
         "bezierConnectionDirection": bezier_direction,

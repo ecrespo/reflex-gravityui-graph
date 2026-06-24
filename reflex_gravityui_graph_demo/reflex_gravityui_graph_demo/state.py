@@ -20,6 +20,7 @@ class GraphState(rx.State):
     # --- camera page toggles ---
     can_drag_camera: bool = True
     can_zoom_camera: bool = True
+    can_drag_blocks: bool = True
 
     # --- scale page selector ---
     scale_preset: str = "Hundred (10×10)"
@@ -36,6 +37,7 @@ class GraphState(rx.State):
         return default_settings(
             can_drag_camera=self.can_drag_camera,
             can_zoom_camera=self.can_zoom_camera,
+            can_drag_blocks=self.can_drag_blocks,
             can_create_new_connections=self.can_create_connections,
             use_bezier_connections=self.use_bezier,
             bezier_direction=self.bezier_direction,
@@ -63,6 +65,9 @@ class GraphState(rx.State):
 
     def toggle_zoom(self, value: bool):
         self.can_zoom_camera = value
+
+    def toggle_drag_blocks(self, value: bool):
+        self.can_drag_blocks = value
 
     def set_scale_preset(self, value: str):
         self.scale_preset = value

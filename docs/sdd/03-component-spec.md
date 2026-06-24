@@ -80,10 +80,13 @@ Each event handler receives a single plain dict.
 
 ## Settings keys commonly used (`TGraphSettingsConfig`)
 
-`canDragCamera`, `canZoomCamera`, `canCreateNewConnections`,
-`useBezierConnections`, `bezierConnectionDirection` (`"horizontal"`/`"vertical"`),
-`showConnectionArrows`, `showConnectionLabels`, `useBlocksAnchors`,
-`scaleFontSize`. Build them with `recipes.default_settings(...)`.
+`canDragCamera`, `canZoomCamera`, `canDrag` (`ECanDrag`:
+`"all"`/`"onlySelected"`/`"none"` — move nodes with the mouse; upstream default
+is `"none"`), `canCreateNewConnections`, `useBezierConnections`,
+`bezierConnectionDirection` (`"horizontal"`/`"vertical"`), `showConnectionArrows`,
+`showConnectionLabels`, `useBlocksAnchors`, `scaleFontSize`. Build them with
+`recipes.default_settings(...)`, whose `can_drag_blocks` arg defaults to `True`
+(`canDrag="all"`) so nodes are draggable out of the box.
 
 ## Invariants
 
