@@ -13,6 +13,20 @@ def test_default_settings_keys_are_camelcase():
     assert "bezierConnectionDirection" in s
 
 
+def test_default_settings_enables_block_drag_by_default():
+    # @gravity-ui/graph defaults canDrag to NONE (blocks immovable); the recipe
+    # must opt into draggable nodes so the component is interactive out of the box.
+    assert recipes.default_settings()["canDrag"] == "all"
+
+
+def test_default_settings_can_restrict_block_drag():
+    assert recipes.default_settings(can_drag_blocks=False)["canDrag"] == "none"
+    assert (
+        recipes.default_settings(can_drag_blocks="onlySelected")["canDrag"]
+        == "onlySelected"
+    )
+
+
 def test_one_block():
     data = recipes.one_block()
     assert len(data.blocks) == 1

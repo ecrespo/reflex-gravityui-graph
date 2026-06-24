@@ -1,6 +1,6 @@
 # 05 · Task Breakdown
 
-Status legend: ✅ done · 🔜 roadmap.
+Status legend: ✅ done · ⏳ pending (env/credentials) · 🔜 roadmap.
 
 ## Phase 0 — Foundations
 - ✅ T0.1 Scaffold repo in the Reflex custom-component layout.
@@ -34,7 +34,8 @@ Status legend: ✅ done · 🔜 roadmap.
 
 ## Phase 4 — Packaging & publish
 - ✅ T4.1 Tests: `test_domain`, `test_recipes`, `test_contract` (render +
-  public API). Pure-Python suite verified (21/21).
+  public API), plus `test_packaging` (import surface / bridge contract) and
+  `test_demo` (demo functional guards). Suite verified (32/32).
 - ✅ T4.2 README with `uv` build/publish workflow.
 - ✅ T4.3 SDD artifacts + research notes.
 - ✅ T4.4 `git init`, commit on `main`, public GitHub repo.
@@ -47,3 +48,40 @@ Status legend: ✅ done · 🔜 roadmap.
 - 🔜 T6.x Custom canvas block registration (`settings.blockComponents`).
 - 🔜 T7.x Imperative API as Reflex special events (zoomToBlocks, updateEntities).
 - 🔜 T8.x Connection-creation layers (ConnectionLayer/NewBlockLayer/Port…).
+
+## Validation pass (post-implementation review)
+
+A code-vs-spec review surfaced gaps the original ✅ marks hid. Each was fixed
+test-first (RED → GREEN); the suite grew 25 → 34.
+
+- ✅ T-G1 NFR5 — make `domain`/`recipes` importable without Reflex. `__init__`
+  eagerly imported `graph.py` (→ Reflex), so the "pure" suite couldn't run on a
+  minimal env. Fixed with a PEP 562 `__getattr__` that defers the component
+  exports. Guard: `test_packaging.py::test_domain_and_recipes_import_without_reflex`.
+- ✅ T-G2 FR6 — lock the event/bridge contract. Added guards that all six event
+  triggers are exposed and wireable, that the JSX bridge ships, and that it still
+  subscribes to the documented upstream event names + payload keys
+  (`test_contract.py`, `test_packaging.py`).
+- ✅ T-G3 Demo — wire the full event surface on the Interaction page (was 3/6;
+  added `on_connection_selection_change`, `on_block_drag_end`, `on_state_change`).
+  Guard: `test_demo.py::test_interaction_page_wires_full_event_surface`.
+- ✅ T-G4 Demo — replace the invalid `github` lucide icon (silently downgraded to
+  `circle_help`) with `code`. Guard: `test_demo.py::test_sidebar_uses_only_valid_icons`.
+- ✅ T-G5 Interactivity — nodes were immovable: `@gravity-ui/graph`'s runtime
+  `DefaultSettings.canDrag` is `ECanDrag.NONE`, and neither the component nor
+  `default_settings` emitted `canDrag`. Added a `can_drag_blocks` arg to
+  `default_settings` (default `True` -> `canDrag="all"`) and a "Drag nodes"
+  toggle on the Camera demo page. Guards:
+  `test_recipes.py::test_default_settings_enables_block_drag_by_default`,
+  `test_default_settings_can_restrict_block_drag`.
+- ✅ T-G6 Connection interactivity — clarified the model: `BlockConnection`
+  geometry is derived from block positions, so links follow their nodes and are
+  not free-draggable by design. The supported edit is drawing connections by
+  dragging anchors (OUT→IN) or Shift+block→block, via `ConnectionLayer` /
+  `canCreateNewConnections`. Exposed a "Create links" toggle on the Camera demo
+  page (reuses `default_settings(can_create_new_connections=…)`). Free-line drag
+  and interactive multipoint waypoints remain roadmap (need a custom layer).
+- ⏳ T4.5 `.pyi` stub — still pending; needs `reflex component build` (uv/node).
+  `pyproject` already declares `*.pyi` in package-data; the file is not yet
+  generated.
+- ⏳ T4.6 `uv publish` — still pending; needs a PyPI token.

@@ -50,7 +50,7 @@ def sidebar() -> rx.Component:
         ),
         rx.spacer(),
         rx.link(
-            rx.hstack(rx.icon("github", size=14), rx.text("Source", size="1")),
+            rx.hstack(rx.icon("code", size=14), rx.text("Source", size="1")),
             href="https://github.com/ecrespo/reflex-gravityui-graph",
             is_external=True,
         ),

@@ -39,11 +39,16 @@ def camera_page() -> rx.Component:
     return page(
         "Camera & zoom",
         "The graph fits to view on attach (graph.zoomTo('center')). Toggle "
-        "whether the user can pan (canDragCamera) or zoom (canZoomCamera).",
+        "whether the user can pan (canDragCamera), zoom (canZoomCamera), move "
+        "nodes by dragging them (canDrag), or draw links by dragging from an OUT "
+        "anchor to an IN anchor (canCreateNewConnections). Drag a node to move "
+        "it; with 'Create links' on, drag between anchors to add a connection.",
         rx.card(
             rx.hstack(
                 _switch("Drag camera", GraphState.can_drag_camera, GraphState.toggle_drag),
                 _switch("Zoom camera", GraphState.can_zoom_camera, GraphState.toggle_zoom),
+                _switch("Drag nodes", GraphState.can_drag_blocks, GraphState.toggle_drag_blocks),
+                _switch("Create links", GraphState.can_create_connections, GraphState.toggle_create),
                 spacing="5",
                 align="center",
             ),
