@@ -50,8 +50,8 @@
   PyPI publishing prerequisites; build with `uv`.
 - **NFR5 (Quality)** Pure-Python domain/recipe logic is unit-tested without a
   running frontend; component wiring is contract-tested with Reflex installed.
-- **NFR6 (Compatibility)** Python ≥ 3.10; Reflex ≥ 0.8; React 17/18 (the
-  library's peer range).
+- **NFR6 (Compatibility)** Python ≥ 3.11; Reflex ≥ 0.10; React 19 (shipped by
+  Reflex 0.10; verified with `@gravity-ui/graph@1.11.0`).
 
 ## Acceptance criteria
 
@@ -59,4 +59,4 @@
 - Demo pages load and reproduce: basics, anchors, colored/dashed edges,
   bezier/straight, vertical direction, grouping, scale presets, theming,
   camera toggles, and interaction events.
-- `pytest -q` green; `reflex component build` + `twine check` green.
+- `pytest -q` green; `uv build` + `twine check` green.

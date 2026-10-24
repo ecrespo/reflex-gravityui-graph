@@ -53,6 +53,6 @@ reproduces the upstream Storybook examples, full SDD documentation, and a
 
 - `graph_canvas(...)` renders a working graph in a Reflex page.
 - The demo runs and reproduces every example category from Storybook.
-- `pytest` passes; `uv run reflex component build` produces a valid wheel/sdist
+- `pytest` passes; `uv build` produces a valid wheel/sdist
   and `twine check` passes.
 - The package installs from PyPI and imports cleanly.

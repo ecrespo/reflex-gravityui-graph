@@ -1,2 +1,2 @@
-reflex>=0.8.0
-reflex-gravityui-graph
+reflex>=0.10.0
+reflex-gravityui-graph>=0.2.0

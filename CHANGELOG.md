@@ -6,6 +6,27 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-10-24
+
+Compatibility release for **Reflex 0.10**.
+
+### Changed
+- Require `reflex>=0.10.0` (was `>=0.8.0`); verified against Reflex 0.10.0
+  (React 19, Vite 8, react-router 8).
+- Require Python `>=3.11` (Reflex 0.10 dropped Python 3.10); CI matrix is now
+  3.11 / 3.12 / 3.13.
+- Build requirement bumped to `setuptools>=78.1.1`.
+- Regenerated `graph.pyi` with the Reflex 0.10 stub generator (PEP 604
+  `X | None` event-handler annotations).
+- Demo app: declare `rx.plugins.RadixThemesPlugin()` explicitly (implicit Radix
+  enablement is deprecated) and require `reflex>=0.10.0`.
+
+### Docs & tooling
+- README, SDD and research notes updated: `reflex component build/share` no
+  longer exist in Reflex 0.10 — build with `uv build` and regenerate the stub
+  with `python -m reflex_base.utils.pyi_generator`.
+- CI gains a job that compiles the demo app against the component.
+
 ## [0.1.0] - 2026-06-24
 
 First release. A publish-ready Reflex custom component wrapping

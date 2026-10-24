@@ -39,9 +39,9 @@ Status legend: ✅ done · ⏳ pending (env/credentials) · 🔜 roadmap.
 - ✅ T4.2 README with `uv` build/publish workflow.
 - ✅ T4.3 SDD artifacts + research notes.
 - ✅ T4.4 `git init`, commit on `main`, public GitHub repo.
-- ⏳ T4.5 `uv run reflex component build` (generates `*.pyi` + dist) — run with a
-  Reflex-supported Python (3.10–3.12).
-- ⏳ T4.6 `uv publish` to PyPI (requires an API token).
+- ✅ T4.5 `.pyi` stub + dist — stub via `reflex_base.utils.pyi_generator`,
+  dist via `uv build` (Python 3.11–3.13, Reflex ≥ 0.10).
+- ✅ T4.6 `uv publish` to PyPI.
 
 ## Roadmap tasks
 - 🔜 T5.x Plugin layers: MiniMap, DevTools, CSS-variables, ELK/layered layout.
@@ -81,7 +81,8 @@ test-first (RED → GREEN); the suite grew 25 → 34.
   `canCreateNewConnections`. Exposed a "Create links" toggle on the Camera demo
   page (reuses `default_settings(can_create_new_connections=…)`). Free-line drag
   and interactive multipoint waypoints remain roadmap (need a custom layer).
-- ⏳ T4.5 `.pyi` stub — still pending; needs `reflex component build` (uv/node).
-  `pyproject` already declares `*.pyi` in package-data; the file is not yet
-  generated.
-- ⏳ T4.6 `uv publish` — still pending; needs a PyPI token.
+- ✅ T4.5 `.pyi` stub — generated and committed (`graph.pyi`), shipped via
+  package-data.
+- ✅ T4.6 `uv publish` — 0.1.0 published.
+- ✅ T4.7 Reflex 0.10 upgrade (0.2.0): `reflex>=0.10.0`, Python ≥ 3.11, stub
+  regenerated, demo compiled and verified in dev + prod (React 19).

@@ -5,8 +5,10 @@ prerequisites / command reference).
 
 ## Custom-component layout
 
-`reflex component init` (in a folder, e.g. `gravityui_graph`) scaffolds a project
-whose PyPI package name is `reflex-<folder>`:
+This repo was scaffolded with `reflex component init` (Reflex ≤ 0.9; the command
+was removed in 0.10 in favour of the
+[component template](https://github.com/reflex-dev/component-template)). The
+layout it produced — PyPI package name `reflex-<folder>` — is kept as-is:
 
 ```
 pyproject.toml
@@ -54,16 +56,19 @@ imperative `setEntities`/`start`/`zoomTo`). See `docs/sdd/02-architecture.md`.
 Prerequisites: a PyPI account + API token.
 
 ```bash
-uv venv && source .venv/bin/activate
-uv pip install -e ".[dev]"
+uv sync --extra dev
 uv run pytest -q
-uv run reflex component build      # builds dist/ + generates the .pyi stub
+uv run --with ruff python -m reflex_base.utils.pyi_generator custom_components/reflex_gravityui_graph/graph.py   # refresh the .pyi stub
+uv build                            # builds .tar.gz + .whl into dist/
 uv publish                          # uploads to PyPI (token via env/CLI)
-reflex component share              # optional: list on the Reflex gallery
 ```
 
-`reflex component build` runs at the project root (where `pyproject.toml` lives)
-and produces `.tar.gz` + `.whl` in `dist/`. Keep `version` in `pyproject.toml`
+Reflex 0.10 removed the `reflex component` CLI (`init`/`build`/`publish`/`share`);
+the official replacement is the
+[component template](https://github.com/reflex-dev/component-template). This repo
+keeps its setuptools layout: the stub is generated with Reflex's
+`reflex_base.utils.pyi_generator`, committed, and shipped via package-data, and
+`uv build` runs at the project root (where `pyproject.toml` lives). Keep `version` in `pyproject.toml`
 bumped for each release. `twine check dist/*` validates metadata before upload.
 
 ## Checklist mapped to this repo
@@ -73,5 +78,5 @@ bumped for each release. `twine check dist/*` validates metadata before upload.
   keyword, Apache-2.0, `dev` extras, `*.pyi`/`*.jsx` package-data.
 - ✅ NoSSR wrapper + JSX bridge + pinned `lib_dependencies`.
 - ✅ README with install + `uv` build/publish instructions.
-- ⏳ `uv run reflex component build` and `uv publish` (run on Python 3.10–3.12
-  with a PyPI token).
+- ✅ `.pyi` stub generated with the Reflex 0.10 `pyi_generator`; `uv build` +
+  `uv publish` on Python 3.11–3.13 (0.1.0 and 0.2.0 published).
