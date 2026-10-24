@@ -25,7 +25,8 @@
 ### M4 — Packaging & publish  ✅ (build/publish steps require credentials)
 - Tests (domain, recipes, public API, render contract) + GitHub Actions CI.
 - README with `uv` build/publish instructions.
-- `uv run reflex component build` → generates `*.pyi` stub + wheel/sdist.
+- `pyi_generator` → `*.pyi` stub; `uv build` → wheel/sdist (Reflex ≥ 0.10 has
+  no `reflex component` CLI).
 - `git` repo on `main`; public GitHub repo; `uv publish` to PyPI.
 
 ## Roadmap (post-0.1)
@@ -47,10 +48,10 @@
 | Event payloads non-serializable | Reduce to ids/coords in the bridge (ADR-5). |
 | Large graphs janky | Straight edges + no arrows at scale; canvas LOD. |
 | Upstream breaking changes | Pin npm version; bump deliberately (ADR-3). |
-| `.pyi` drift | Generate via `reflex component build`, ship in wheel. |
+| `.pyi` drift | Regenerate via `python -m reflex_base.utils.pyi_generator`, ship in wheel. |
 
 ## Definition of done
 
 - Demo reproduces every example category and runs via `reflex run`.
-- `pytest -q` green locally and in CI on 3.10–3.12.
+- `pytest -q` green locally and in CI on 3.11–3.13 (Reflex ≥ 0.10).
 - Wheel/sdist build clean; `twine check` passes; package published & importable.
