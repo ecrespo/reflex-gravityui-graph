@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "reflex-gravityui-graph"
-version = "0.2.0"
+version = "0.2.1"
 description = "A Reflex custom component wrapping @gravity-ui/graph (a high-performance Canvas + React graph/flowchart/node-editor visualization library)."
 readme = "README.md"
 # Reflex 0.10 requires Python >=3.11.

@@ -6,6 +6,19 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.2.1] - 2026-10-24
+
+### Added
+- `publish.yml` GitHub Actions workflow: pushing a `v*` tag on `main` tests,
+  builds and publishes the release to PyPI through Trusted Publishing (no API
+  token). It refuses tags that are not on `main` or that do not match the
+  `pyproject.toml` version.
+
+### Changed
+- CI actions upgraded to Node 24 releases (`actions/checkout@v7`,
+  `actions/setup-python@v7`, `actions/upload-artifact@v7`), pinned by commit SHA;
+  workflows run with read-only `contents` permission.
+
 ## [0.2.0] - 2026-10-24
 
 Compatibility release for **Reflex 0.10**.

@@ -60,7 +60,7 @@ uv sync --extra dev
 uv run pytest -q
 uv run --with ruff python -m reflex_base.utils.pyi_generator custom_components/reflex_gravityui_graph/graph.py   # refresh the .pyi stub
 uv build                            # builds .tar.gz + .whl into dist/
-uv publish                          # uploads to PyPI (token via env/CLI)
+git tag -a vX.Y.Z -m vX.Y.Z && git push origin vX.Y.Z   # publish.yml → PyPI (Trusted Publishing)
 ```
 
 Reflex 0.10 removed the `reflex component` CLI (`init`/`build`/`publish`/`share`);
